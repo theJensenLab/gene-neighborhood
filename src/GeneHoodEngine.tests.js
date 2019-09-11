@@ -12,8 +12,8 @@ const filePathIn = path.resolve(testDataPath, 'flgB.stables.list')
 const filePathOut = path.resolve(testDataPath, 'geneHood.pack.json')
 
 
-describe('GeneHood', function() {
-	this.timeout(10000)
+describe.only('GeneHood', function() {
+	this.timeout(120000)
 	let dataParsed = {}
 	before(() => {
 		return new Promise((resolve) => {
@@ -55,6 +55,10 @@ describe('GeneHood', function() {
 		dataParsed.gns.forEach((gn) => {
 			expect(gn).to.have.property('span')
 		})
+	})
+	it('should make a mock tree', function() {
+		const expectedMockTree = "(GCF_000196175.1-BD_RS15585, GCF_000006765.1-PA1077, GCF_000006765.1-PA1105, GCF_000008485.1-lpg1216)"
+		expect(dataParsed.phylo).eql(expectedMockTree)
 	})
 	after(function() {
 		let files = []

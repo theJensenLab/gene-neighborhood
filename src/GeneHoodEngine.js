@@ -64,6 +64,7 @@ class GeneHoodEngine {
 	constructor(stableIdFile, phyloFile = null, packedFile = 'geneHood.pack.json', tempFastaFile = 'geneHood.fa', tempGeneFile = 'geneHood.gene.json') {
 		this.stableIdFile_ = stableIdFile
 		this.phyloFile_ = phyloFile
+		this.phyloTree = ""
 		this.packedFile_ = packedFile
 		this.tempFastaFile_ = tempFastaFile
 		this.tempGeneFile_ = tempGeneFile
@@ -72,8 +73,15 @@ class GeneHoodEngine {
 		})
 	}
 
+	buildMockPhylogeny() {
+		const mockTree = fs.readFileSync(this.stableIdFile_).toString().split('\n').join(', ')
+		this.phyloTree = `(${mockTree})`
+		return this
+	}
+
 	run(downstream, upstream) {
 		this.log.info('Fetching sequences')
+		this.buildMockPhylogeny()
 		return gh.fetch(this.stableIdFile_, this.tempFastaFile_, this.tempGeneFile_, downstream, upstream)
 			.then(() => {
 				this.log.info(`Making BLAST database from ${this.tempFastaFile_}`)
@@ -94,7 +102,7 @@ class GeneHoodEngine {
 				this.log.info('Packing results')
 				const geneHoodObject = new GeneHoodObject()
 				const gnData = JSON.parse(fs.readFileSync(this.tempGeneFile_))
-				let phyloTree = null
+				let phyloTree = this.phyloTree
 				if (this.phyloFile_)
 					phyloTree = fs.readFileSync(this.phyloFile_).toString()
 				geneHoodObject.build(gnData, nodesNlinks, phyloTree)
