@@ -47,7 +47,7 @@
     "pick-a-color": "^1.2.3",
     "pug": "^2.0.0-rc.4",
     "pumpify": "^1.4.0",
-    "shelljs": "^0.8.1",
+    "shelljs": "^0.8.5",
     "text2json": "^2.2.3",
     "through2": "^2.0.3"
   },
