@@ -31,7 +31,7 @@
     "argparse": "^1.0.9",
     "blastinutils": "^0.2.0",
     "body-parser": "^1.18.2",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^3.4.1",
     "browserify": "^14.5.0",
     "bunyan": "^1.8.12",
     "chalk": "^2.3.1",
